@@ -1,4 +1,4 @@
-annotated-types==0.7.0
+lannotated-types==0.7.0
 anyio==4.8.0
 certifi==2024.12.14
 click==8.1.8
@@ -32,3 +32,5 @@ uvicorn==0.34.0
 uvloop==0.21.0
 watchfiles==1.0.4
 websockets==14.2
+python-dotenv
+pymysql
