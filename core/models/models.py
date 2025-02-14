@@ -1,80 +1,93 @@
+"""Imports"""
 from db import Base
-from sqlalchemy import Column,Float,String,Integer,ForeignKey,DateTime,Date
-from sqlalchemy.orm import relationship
+from sqlalchemy import(
+    DateTime,
+    Date,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+
+)
+from sqlalchemy.orm import(
+    relationship,
+    mapped_column
+)
 from datetime import datetime
 
+"""Database models"""
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
 
-    id = Column(Integer, primary_key = True, autoincrement = True)
-    username = Column(String)
-    hashed_password = Column(String)
-    email = Column(String)
-    role_id = Column(Integer, ForeignKey('roles.id'))
+    id = mapped_column(Integer, primary_key = True, autoincrement = True)
+    username = mapped_column(String)
+    hashed_password = mapped_column(String)
+    email = mapped_column(String)
+    role_id = mapped_column(Integer, ForeignKey('roles.id'))
     role = relationship('Role')
 
 class Budget(Base):
-    __tablename__ = 'budgets'
+    __tablename__ = 'budget'
 
-    id = Column(Integer, primary_key = True, autoincrement = True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    id = mapped_column(Integer, primary_key = True, autoincrement = True)
+    user_id = mapped_column(Integer, ForeignKey('users.id'))
     user = relationship('User')
-    category_id = Column(Integer, ForeignKey('categories.id'))
+    category_id = mapped_column(Integer, ForeignKey('categories.id'))
     category = relationship('Category')
-    amount = Column(Float)
-    start_date = Column(DateTime, default = datetime.now())
-    end_date = Column(DateTime)
+    amount = mapped_column(Float)
+    start_date = mapped_column(DateTime, default = datetime.now())
+    end_date = mapped_column(DateTime)
 
 class Category(Base):
-    __tablename__ = 'categories'
+    __tablename__ = 'category'
 
-    id = Column(Integer, primary_key = True)
-    name = Column(String)
-    type = Column(String)
+    id = mapped_column(Integer, primary_key = True)
+    name = mapped_column(String)
+    type = mapped_column(String)
 
 class Transaction(Base):
-    __tablename__ = 'transactions'
+    __tablename__ = 'transaction'
 
-    id = Column(Integer, autoincrement = True)
-    amount = Column(Float)
-    description = Column(String)
-    type = Column(String, nullable = True)
-    date = Column(Date)
-    category_id = Column(Integer, ForeignKey('categories.id'))
+    id = mapped_column(Integer, autoincrement = True)
+    amount = mapped_column(Float)
+    description = mapped_column(String)
+    type = mapped_column(String, nullable = True)
+    date = mapped_column(Date)
+    category_id = mapped_column(Integer, ForeignKey('categories.id'))
     category = relationship('Category')
-    account_id = Column(Integer, ForeignKey('accounts.id'))
+    account_id = mapped_column(Integer, ForeignKey('accounts.id'))
     account = relationship('Account')
 
 class Account(Base):
-    __tablename__ = 'accounts'
+    __tablename__ = 'account'
 
-    id = Column(Integer, autoincrement = True)
-    name = Column(String)
-    type = Column(String)
-    balance = Column(Float)
-    currency = Column(String)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    id = mapped_column(Integer, autoincrement = True)
+    name = mapped_column(String)
+    type = mapped_column(String)
+    balance = mapped_column(Float)
+    currency = mapped_column(String)
+    user_id = mapped_column(Integer, ForeignKey('users.id'))
     user = relationship('User')
-    created_at = Column(DateTime, default = datetime.now())
+    created_at = mapped_column(DateTime, default = datetime.now())
 
 class Report(Base):
-    __tablename__ = 'reports'
+    __tablename__ = 'report'
 
-    id = Column(Integer, primary_key = True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    id = mapped_column(Integer, primary_key = True)
+    user_id = mapped_column(Integer, ForeignKey('users.id'))
     user = relationship('User')
-    description = Column(String)
-    created_at = Column(DateTime, default = datetime.now())
+    description = mapped_column(String)
+    created_at = mapped_column(DateTime, default = datetime.now())
 
 class Goal(Base):
-    __tablename__ = 'goals'
+    __tablename__ = 'goal'
 
-    id = Column(Integer, autoincrement = True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    id = mapped_column(Integer, autoincrement = True)
+    user_id = mapped_column(Integer, ForeignKey('users.id'))
     user = relationship('User')
-    target_amount = Column(Float)
-    current_amount = Column(Float)
-    description = Column(String)
-    created_at = Column(DateTime, default = datetime.now())
+    target_amount = mapped_column(Float)
+    current_amount = mapped_column(Float)
+    description = mapped_column(String)
+    created_at = mapped_column(DateTime, default = datetime.now())
 
 
