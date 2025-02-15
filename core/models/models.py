@@ -16,6 +16,13 @@ from sqlalchemy.orm import(
 from datetime import datetime
 
 """Database models"""
+
+class Role(Base):
+    __tablename__ = 'role'
+    
+    id = mapped_column(Integer, primary_key = True, index = True)
+    name = mapped_column(String, unique = True, index = True) 
+
 class User(Base):
     __tablename__ = 'user'
 
